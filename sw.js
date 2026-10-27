@@ -1,5 +1,5 @@
 /* Offline support: precache the app shell and every lecture; fonts are cached as they are fetched. */
-var VERSION = 'rdt-v3';
+var VERSION = 'rdt-v4';
 var SHELL = [
   './', 'index.html', 'manifest.webmanifest', 'icon.svg', 'css/app.css',
   'js/core.js', 'js/views.js', 'js/lecture.js', 'js/study.js', 'js/shell.js',

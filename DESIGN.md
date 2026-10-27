@@ -278,6 +278,26 @@ Sources are cited on every section: slide ranges plus Wiegers & Beatty (*Softwar
 | Thick bottom border on a rounded element (`kbd`) | Warning | Removed the thicker bottom border |
 | Decorative grid background (`.blueprint`) | Advisory | **Kept on purpose:** used only on diagram canvases, where it is the drawing surface |
 
+### 7.4 Phone layout pass (375 px)
+
+A script measured every screen at phone width: page width, the size of each tap target, and whether any control row ran past the side margin. These issues were found and fixed:
+
+| Issue | Fix |
+|---|---|
+| The page scrolled sideways on the flashcard and quiz screens, because the 3D card flip and the drawer scrim widened it | `overflow-x: clip` on the main column and the card stage |
+| Segmented controls wrapped into multi-row pills and ran past the margin | They scroll sideways in one row. The flashcard filter bar no longer wraps, because wrapping had stretched its children to their natural width |
+| Tap targets were 26–34 px (chips, filters, glossary links, the A–Z bar, small buttons) | 40–48 px on phones and touch screens. The A–Z bar scrolls sideways in one row |
+| Top-bar buttons were heavy bordered boxes | Borderless 44 px icon buttons; the top bar is 56 px tall |
+| The drawer had no close button or theme switch, and the page behind it still scrolled | Close button, a theme button in the footer within thumb reach, swipe left to close, page scroll locked while open, 48 px rows |
+| The phone status bar stayed the system colour after a theme switch | The `theme-color` meta tag follows the chosen theme |
+| Headings were oversized and spacing too loose on phones | Phone sizes for the hero, lecture titles, sections and stats; the hero buttons sit in a two-column grid |
+| The flashcard covered its own rating buttons | Shorter card; the rating row sits below it |
+| Quiz footer buttons were cramped side by side | Stacked full width, primary action first |
+| Search opened as a floating box | Opens as a sheet from the top of the screen |
+| Lecture tab icons crowded the tab row | Icons hidden on phones; tabs run edge to edge and scroll sideways |
+
+After the fixes, no screen scrolls sideways on a phone. The only controls under 40 px are slider tracks and number fields inside figures (34 px).
+
 ---
 
 ## 8. Delivery timeline

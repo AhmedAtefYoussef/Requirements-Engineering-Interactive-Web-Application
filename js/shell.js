@@ -36,24 +36,44 @@
 
   function setRail(open) {
     rail.classList.toggle('open', open); scrim.classList.toggle('open', open);
+    document.documentElement.classList.toggle('drawer-open', open);
     $('#menu-btn').setAttribute('aria-expanded', String(open));
-    if (open) { var f = rail.querySelector('[aria-current="page"]') || rail.querySelector('a'); f && f.focus(); }
+    if (open) { var f = rail.querySelector('[aria-current="page"]') || rail.querySelector('a'); f && f.focus({ preventScroll: true }); }
   }
   $('#menu-btn').addEventListener('click', function () { setRail(!rail.classList.contains('open')); });
   scrim.addEventListener('click', function () { setRail(false); });
   rail.addEventListener('click', function (e) { if (e.target.closest('a')) setRail(false); });
+  // Drawer header: close button; drawer footer: theme switch within thumb reach.
+  var closeBtn = h('button', { class: 'icon-btn rail-close', 'aria-label': 'Close course menu', onclick: function () { setRail(false); $('#menu-btn').focus(); } }, RE.icon('x'));
+  rail.insertBefore(closeBtn, rail.firstChild);
+  var railTheme = h('button', { class: 'btn rail-theme', onclick: function (e) { toggleTheme(e.currentTarget); } }, RE.icon('moon'), h('span', null, 'Dark theme'));
+  $('.rail-foot').insertBefore(railTheme, $('.rail-foot').firstChild);
+  // Swipe the drawer left to close it.
+  var sx = null;
+  rail.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; }, { passive: true });
+  rail.addEventListener('touchend', function (e) { if (sx != null && sx - e.changedTouches[0].clientX > 60) setRail(false); sx = null; }, { passive: true });
+  matchMedia('(min-width: 961px)').addEventListener('change', function (m) { if (m.matches) setRail(false); });
 
   /* ---------- theme ---------- */
   function effectiveDark() {
     var t = document.documentElement.getAttribute('data-theme');
     return t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
   }
-  $('#theme-btn').addEventListener('click', function (e) {
+  function syncThemeUI() {
+    var dark = effectiveDark();
+    $('#theme-btn').setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+    railTheme.replaceChild(RE.icon(dark ? 'sun' : 'moon'), railTheme.firstChild);
+    railTheme.lastChild.textContent = dark ? 'Light theme' : 'Dark theme';
+    // The phone's status bar follows the page ground.
+    RE.$$('meta[name="theme-color"]').forEach(function (m) { m.setAttribute('content', dark ? '#081630' : '#E6ECEA'); m.removeAttribute('media'); });
+  }
+  $('#theme-btn').addEventListener('click', function (e) { toggleTheme(e.currentTarget); });
+  function toggleTheme(origin) {
     var next = effectiveDark() ? 'light' : 'dark';
-    function apply() { document.documentElement.setAttribute('data-theme', next); RE.store.set('theme', next); }
+    function apply() { document.documentElement.setAttribute('data-theme', next); RE.store.set('theme', next); syncThemeUI(); }
     // Ink spreads from the button, like flooding a cyanotype.
     if (document.startViewTransition && !RE.motion.reduced()) {
-      var r = e.currentTarget.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+      var r = origin.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
       var rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
       document.documentElement.classList.add('theme-vt');
       var vt = document.startViewTransition(apply);
@@ -63,8 +83,8 @@
       });
       vt.finished.then(function () { document.documentElement.classList.remove('theme-vt'); });
     } else apply();
-    $('#theme-btn').setAttribute('aria-label', next === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
-  });
+  }
+  syncThemeUI();
   var css = document.createElement('style');
   css.textContent = '.theme-vt::view-transition-old(root),.theme-vt::view-transition-new(root){animation:none;mix-blend-mode:normal}';
   document.head.appendChild(css);
@@ -109,7 +129,7 @@
       view.innerHTML = '';
       window.scrollTo(0, 0);
       if (r.page === 'lecture') RE.lectureView.mount(view, r);
-      else RE.views[r.page](view, r);
+      else { document.title = (r.page === 'home' ? '' : r.page[0].toUpperCase() + r.page.slice(1) + ' · ') + 'Requirements Engineering'; RE.views[r.page](view, r); }
       if (!opts || !opts.initial) view.focus({ preventScroll: true });
     };
     if (document.startViewTransition && !RE.motion.reduced() && current && !(opts && opts.initial)) document.startViewTransition(swap);
