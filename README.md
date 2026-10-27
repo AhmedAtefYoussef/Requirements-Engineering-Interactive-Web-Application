@@ -1,5 +1,7 @@
 # Requirements Engineering Interactive Web Application
 
+**Live app:** https://ahmedatefyoussef.github.io/Requirements-Engineering-Interactive-Web-Application/
+
 A study companion for **CSEN406 Requirements Engineering** (Dr. John Zaki). Five lecture "sheets" laid out like an engineering drawing set, each with:
 
 - **Learn** — the lesson in sections, with key takeaways and sources (slides + Wiegers & Beatty, Sommerville, *Perspectives on Software Requirements*)
