@@ -8,7 +8,7 @@ A study companion for **CSEN406 Requirements Engineering** (Dr. John Zaki). Five
 - **Quiz** — concept, theory and practice questions, every answer explained
 - **Glossary** — searchable, A–Z, with related-term links
 
-Plus 31 interactive figures (requirement sorter, SMART builder, MoSCoW board, $100 method, AHP calculator, WRSPM model, use case / sequence / class / state diagrams), a course-wide review deck, and Ctrl K search.
+Plus 26 interactive figure types (used in 35 places) (requirement sorter, SMART builder, MoSCoW board, $100 method, AHP calculator, WRSPM model, use case / sequence / class / state diagrams), a course-wide review deck, and Ctrl K search.
 
 ## Run it
 
@@ -36,3 +36,5 @@ js/viz/l1..l5.js     interactive figures per lecture (see js/viz/VIZ-CONTRACT.md
 content/l1..l5.js    lecture content (see content/SCHEMA.md)
 sw.js                service worker
 ```
+
+See [DESIGN.md](DESIGN.md) for the full design and architecture audit.
