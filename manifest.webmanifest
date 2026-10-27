@@ -1,0 +1,11 @@
+{
+  "name": "Requirements Drafting Table",
+  "short_name": "Drafting Table",
+  "description": "CSEN406 Requirements Engineering study companion.",
+  "start_url": "./index.html#home",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#E6ECEA",
+  "theme_color": "#1E47C4",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
