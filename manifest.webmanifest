@@ -1,6 +1,6 @@
 {
-  "name": "Requirements Drafting Table",
-  "short_name": "Drafting Table",
+  "name": "Requirements Engineering",
+  "short_name": "Req. Engineering",
   "description": "CSEN406 Requirements Engineering study companion.",
   "start_url": "./index.html#home",
   "scope": "./",

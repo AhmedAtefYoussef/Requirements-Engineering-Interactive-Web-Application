@@ -1,4 +1,4 @@
-# Requirements Drafting Table
+# Requirements Engineering Interactive Web Application
 
 A study companion for **CSEN406 Requirements Engineering** (Dr. John Zaki). Five lecture "sheets" laid out like an engineering drawing set, each with:
 

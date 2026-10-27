@@ -195,7 +195,7 @@
     state.tab = r.tab;
     var tabLabel = TABS.filter(function (t) { return t.id === r.tab; })[0].label;
     RE.crumbs([{ text: 'Course plan', href: '#home' }, { text: 'Lecture ' + meta.num, href: '#' + r.lid }, { text: r.tab === 'learn' ? meta.short : tabLabel }]);
-    document.title = 'L' + meta.num + ' ' + tabLabel + ' · Requirements Drafting Table';
+    document.title = 'L' + meta.num + ' ' + tabLabel + ' · Requirements Engineering';
   }
 
   RE.lectureView = {
